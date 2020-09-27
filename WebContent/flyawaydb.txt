@@ -1,0 +1,71 @@
+create database flyawaydb;
+
+use flyawaydb;
+
+create table airline (
+	airline_id int(11) NOT NULL AUTO_INCREMENT,
+	airline_code varchar(10) NOT NULL,
+	airline_name varchar(50) NOT NULL,
+	PRIMARY KEY (airline_id)
+	
+);
+
+
+create table place (
+	place_id int(11) NOT NULL AUTO_INCREMENT,
+	source varchar(30) NOT NULL,
+	destination varchar(30) NOT NULL,
+	PRIMARY KEY (place_id)
+);
+
+create table flight (
+	flight_id int(11) NOT NULL AUTO_INCREMENT,
+	flight_code varchar(10) NOT NULL,
+	arrival_date date NOT NULL,
+	departure_date date NOT NULL,
+	arrival_time time NOT NULL,
+	departure_time time NOT NULL,
+	total_tickets int(11) NOT NULL,
+	price decimal(10,2) NOT NULL,
+	place_id int(11) NOT NULL,
+	airline_id int(11) NOT NULL,
+	PRIMARY KEY (flight_id),
+	KEY place_fk (place_id),
+	CONSTRAINT flight_place_fk FOREIGN Key (place_id) REFERENCES place (place_id),
+	KEY airline_fk (airline_id),
+	CONSTRAINT flight_airline_fk FOREIGN Key (airline_id) REFERENCES airline (airline_id)	
+);
+
+
+
+create table admin (
+	admin_id int(11) NOT NULL AUTO_INCREMENT,
+	username varchar(50) NOT NULL,
+	password varchar(20) NOT NULL,
+	PRIMARY KEY (admin_id)
+	
+);
+
+create table user (
+	user_id int(11) NOT NULL AUTO_INCREMENT,
+	username varchar(50) NOT NULL,
+    mobile_number int(10) NOT NULL,
+    age int(3) NOT NULL,
+	PRIMARY KEY (user_id)
+);
+
+create table user_flight(
+	user_id int(11) NOT NULL,
+	flight_id int(11) NOT NULL,
+	PRIMARY KEY (user_id, flight_id),
+	CONSTRAINT user_fk FOREIGN Key (user_id) REFERENCES user (user_id),
+	CONSTRAINT flight_fk FOREIGN Key (flight_id) REFERENCES flight (flight_id)
+);
+
+ 
+  insert into airline values("AA", "Air Asia");
+  insert into airline values("AI", "Air India");
+  insert into airline values("IG", "Indigo");
+  insert into airline values("JA", "Jet Airways");
+  insert into airline values("SJ", "Spice Jet");
+  
