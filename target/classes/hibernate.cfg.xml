@@ -19,7 +19,6 @@
         <mapping class="com.shweta.model.Airline" />
         <mapping class="com.shweta.model.Flight" />
         <mapping class="com.shweta.model.Place" />
-        <mapping class="com.shweta.model.User" />
-        <mapping class="com.shweta.model.Ticket" />
+        <mapping class="com.shweta.model.User" />        
     </session-factory>
 </hibernate-configuration>

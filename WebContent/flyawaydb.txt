@@ -46,26 +46,23 @@ create table admin (
 	
 );
 
-create table user (
+create table user(
 	user_id int(11) NOT NULL AUTO_INCREMENT,
-	username varchar(50) NOT NULL,
-    mobile_number int(10) NOT NULL,
-    age int(3) NOT NULL,
-	PRIMARY KEY (user_id)
+	mobile_number int(10) NOT NULL,
+    username varchar(40) NOT NULL,
+	age int(3) NOT NULL,
+    flight_id int(11) NOT NULL,
+	PRIMARY KEY (user_id),
+	KEY user_flight (flight_id),
+	CONSTRAINT user_flight FOREIGN KEY (flight_id) REFERENCES flight (flight_id)
 );
 
-create table user_flight(
-	user_id int(11) NOT NULL,
-	flight_id int(11) NOT NULL,
-	PRIMARY KEY (user_id, flight_id),
-	CONSTRAINT user_fk FOREIGN Key (user_id) REFERENCES user (user_id),
-	CONSTRAINT flight_fk FOREIGN Key (flight_id) REFERENCES flight (flight_id)
-);
+
+
 
  
   insert into airline values("AA", "Air Asia");
   insert into airline values("AI", "Air India");
-  insert into airline values("IG", "Indigo");
-  insert into airline values("JA", "Jet Airways");
-  insert into airline values("SJ", "Spice Jet");
+  
+  
   

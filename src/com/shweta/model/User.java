@@ -1,5 +1,6 @@
 package com.shweta.model;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -10,6 +11,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -32,6 +35,10 @@ public class User {
 	private String username;
 
 	
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="flight_id")
+	private Flight flight;
+	
 	public User() {}
 
 	
@@ -40,6 +47,18 @@ public class User {
 		this.age = age;
 		this.mobileNumber = mobileNumber;
 		this.username = username;
+	}
+	
+	
+
+
+	public User( int age, long mobileNumber, String username, Flight flight) {
+		
+		
+		this.age = age;
+		this.mobileNumber = mobileNumber;
+		this.username = username;
+		this.flight = flight;
 	}
 
 
@@ -74,6 +93,16 @@ public class User {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+
+	public Flight getFlight() {
+		return flight;
+	}
+
+
+	public void setFlight(Flight flight) {
+		this.flight = flight;
 	}
 
 	

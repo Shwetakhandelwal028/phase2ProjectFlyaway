@@ -23,9 +23,7 @@
 <a href="show-flights">Show Flights</a> |
 <a href="update-flight.jsp">Update Flight</a> |
 <a href="delete-flight.jsp">Delete Flight</a> |
-<a href="create-ticket.jsp">Create Ticket</a> |
-<a href="show-tickets">Show Tickets</a> |
-<a href="update-ticket.jsp">Update Ticket</a>  
+ 
 
 <div class="container">
 	<section id="content">

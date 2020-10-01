@@ -2,10 +2,12 @@ package com.shweta.model;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,6 +20,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedStoredProcedureQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.ParameterMode;
 import javax.persistence.StoredProcedureParameter;
 import javax.persistence.Table;
@@ -52,10 +55,7 @@ public class Flight {
 	@Column(name="price")
 	private double price;
 	
-	@ManyToMany(targetEntity=User.class, cascade = { CascadeType.ALL} )
-	@JoinTable(name="user", 
-	joinColumns= {@JoinColumn(name="flight_id")},
-	inverseJoinColumns= {@JoinColumn(name="user_id")})
+	@OneToMany(mappedBy="flight")
 	private List<User> user;
 
 	@ManyToOne()
@@ -150,6 +150,8 @@ public class Flight {
 	public void setPrice(double price) {
 		this.price = price;
 	}
+
+	
 
 	public List<User> getUser() {
 		return user;

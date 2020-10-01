@@ -24,24 +24,29 @@
   <h3>Flight Details</h3>
   <table border ="1" width="500" align="center"> 
          <tr bgcolor="00FF7F"> 
-          <th><b>Flight Code</b></th> 
+          <th><b>Flight Id</b></th> 
           <th><b>Airline Name</b></th>
           <th><b>Depart Date</b></th>
           <th><b>SOURCE</b></th> 
           <th><b>DESTINATION</b></th> 
+          <th><b> </b></th> 
          </tr> 
-         <%ArrayList<Flight> flight =  
-            (ArrayList<Flight>)request.getAttribute("flights"); 
-        for(Flight f:flight){ %>
+         <%ArrayList<Object[]> flight =  
+            (ArrayList<Object[]>)request.getAttribute("flights"); 
+        for(Object[] f:flight){ %>
         
         <tr> 
-                <td><%=f.getFlightCode()%></td> 
-                <td><%=f.getAirline().getName()%></td> 
-                <td><%=f.getDepartDate()%></td> 
-                <td><%=f.getPlace().getSource()%></td>
-                <td><%=f.getPlace().getDestination()%></td>
-                
+                <td><%=f[0]%></td> 
+                <td><%=f[1]%></td> 
+                <td><%=f[2]%></td> 
+                <td><%=f[3]%></td>
+                <td><%=f[4]%></td>
+                <td><a href="book-flight.jsp">BOOK FLIGHT</a>
+               <td>
+               
+               </td>
             </tr> 
+            
             <%}%> 
         </table>  
         <hr/> 

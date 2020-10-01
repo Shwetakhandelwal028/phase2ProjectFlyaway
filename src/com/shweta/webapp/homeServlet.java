@@ -12,6 +12,7 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
+import java.util.TimeZone;
 
 import javax.persistence.Query;
 import javax.persistence.StoredProcedureQuery;
@@ -25,7 +26,6 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.procedure.ProcedureCall;
-
 
 import com.shweta.model.Airline;
 import com.shweta.model.Flight;
@@ -52,29 +52,10 @@ public class homeServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
-		response.setContentType("text/html");
-		PrintWriter out = response.getWriter(); 
-		try {
-			SessionFactory sFactory = HibernateUtil.buildSessionFactory();
-			Session session = sFactory.openSession();
-			Transaction trans = session.beginTransaction();
-			
-			
-			List<Flight> flight = session.createQuery("from Flight").list();
-			request.setAttribute("flights", flight);
-			request.getRequestDispatcher("flight-details.jsp").forward(request, response);
-			trans.commit();
-			session.close();
-			sFactory.close();
-				
-				
-		}catch(Exception e) {
-			e.printStackTrace();
-		}
-		
-						
-	}
+
+			}
+
+	
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
@@ -82,18 +63,48 @@ public class homeServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		response.setContentType("text/html");
+		PrintWriter out = response.getWriter();
+		String s = request.getParameter("source");
+		String d = request.getParameter("destination");
 		
+		LocalDate date = LocalDate.parse(request.getParameter("date"));
+		Integer tot_passengers = Integer.parseInt(request.getParameter("passengers"));
+		
+		System.out.println(s);
+		System.out.println(d);
 
-		
-		
-			
+		try {
+ 			SessionFactory sFactory = HibernateUtil.buildSessionFactory();
+			Session session = sFactory.openSession();
+			Transaction trans = session.beginTransaction();
 
+			Query query = session.createQuery("select f.id, "
+					+ "a.name, f.departDate, p.source, p.destination from Flight f "
+					+ "join f.airline a join f.place p where  p.source = :s"
+					+ " and p.destination = :d and f.departDate = :date");
+		    query.setParameter("s", s);
+		    query.setParameter("d", d);
+			query.setParameter("date", date);
 			
-            
-			 
+			List<Object[]> flight = query.getResultList();
+			if(flight.isEmpty()) {
+				out.println("<h3 style='color:red'; align = 'center'>No flights Available!!</h3>");
+				request.getRequestDispatcher("index.jsp").include(request, response);
+			}else {
+				request.setAttribute("flights", flight);
+				request.getRequestDispatcher("flight-details.jsp").forward(request, response);
+			}
 			
-		
+			trans.commit();
+			session.close();
+			sFactory.close();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 
 	}
-
+		
 }

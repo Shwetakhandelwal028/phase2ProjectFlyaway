@@ -8,11 +8,12 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  * Servlet implementation class Payment
  */
-@WebServlet("/Payment")
+@WebServlet("/payment")
 public class Payment extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -39,8 +40,15 @@ public class Payment extends HttpServlet {
 		response.setContentType("text/html");
 		PrintWriter  out = response.getWriter();
 		
-		request.getRequestDispatcher("status.jsp").forward(request, response);
 		
+		/*HttpSession session = request.getSession(false);
+		if(session != null) {
+			String source = (String) session.getAttribute("source");
+			String destination = (String) session.getAttribute("destination");
+		
+			out.println("<h3>Your flight has been booked from "+source+" to "+destination+" !</h3>");*/
+		request.getRequestDispatcher("status.jsp").forward(request, response);
+		}
 	}
 
-}
+
